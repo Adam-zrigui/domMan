@@ -1,23 +1,32 @@
-"use strict";
-const form = document.getElementById('workpls')
-const username = document.getElementById('name')
-const pass = document.getElementById('password')
-const btn = document.getElementById('btn')
+const route = (event) => {
+    event = event || window.event;
+    event.preventDefault();
+    window.history.pushState({}, "", event.target.href);
+    handleLocation();
+};
 
-let usernames = ''
-username.onchange = (e) => {
+const routes = {
+    "/login": "/view/index.html",
 
-    usernames = e.target.value
-console.log(usernames)
+    "/": "/view/lorem.html",
+};
+
+const handleLocation = async () => {
+    const path = window.location.pathname;
+    const route = routes[path] || routes[404];
+    const html = await fetch(route).then((data) => data.text());
+    document.getElementById("main-page").innerHTML = html;
+};
+
+window.onpopstate = handleLocation;
+window.route = route;
+
+handleLocation();
+
+const TheGFunction = () => {
+    route()
+    localStorage.removeItem("password")
+    localStorage.removeItem("user")
+    localStorage.removeItem("todos")
 }
-let passs = ''
-pass.onchange = (e) => {
-   
-    passs = e.target.value
-    console.log(passs)
-}
- 
-form.onsubmit = () => {
-localStorage.setItem("user", usernames)
-localStorage.setItem("password", passs)
-}
+window.g = TheGFunction

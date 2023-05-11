@@ -1,24 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../style.css">
-    <script src="../package/index.js" defer></script>
-</head>
-<body>
-    <form action="" id="workpls">
-        <div class="">
-            <label for="name">username</label>
-            <input type="text" name="name" id="name" required>
-        </div>
-<div class="">
-    <label for="password">password</label>
-    <input type="password" name="password" id="password" required>
-</div>
-<i><button type="submit" id="btn">sign in</button>    </i>
-</form>
-</body>
-</html>
+<form action="" class="form" id="workpls">
+    <div class="form-group">
+      <label for="name" class="form-label">Username</label>
+      <input type="text" name="name" id="name" class="form-input" required>
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="password" id="password" class="form-input" required>
+      <label for="check" class="show-password-label">Show Password</label>
+      <input type="checkbox" name="check" id="check"  class="show-password-checkbox">
+    </div>
+    <i><button type="submit" id="btn" class="submit-btn">Sign In</button></i>
+  </form>
+<script>
+'use strict';
+    const form = document.getElementById('workpls');
+    const username = document.getElementById('name');
+    const pass = document.getElementById('password');
+    const btn = document.getElementById('btn');
+    const checkbox = document.getElementById('check')
+    let usernames = '';
+    username.onchange = (e) => {
+      usernames = e.target.value;
+      console.log(usernames);
+    };
+    
+    let passs = '';
+    pass.onchange = (e) => {
+      passs = e.target.value;
+      console.log(passs);
+    };
+    function checkInputs() {
+        if (username.value.length === 0 || pass.value.length === 0) {
+            btn.disabled = true
+        } else {
+            btn.disabled = false
+        }
+    }
+    
+    checkbox.onchange = () => {
+        if (checkbox.checked) {
+            pass.type = 'text'
+        } else {
+            pass.type = 'password'
+        }
+    }
+    form.onsubmit = () => {
+      window.location.href = "about.html"
+          localStorage.setItem("user", usernames);
+          localStorage.setItem("password", passs);
+        }
+      username.addEventListener('input', checkInputs)
+        pass.addEventListener('input', checkInputs)
+    </script>
